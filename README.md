@@ -1,5 +1,7 @@
 # PLINK / GWAS QC Workflow Agent
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/b156698-commits/Plink-GWAS-QC-Workflow-Agent/blob/main/notebooks/05_final_gradio_app_v5_rate_limit_safe.ipynb)
+
 A teaching-oriented AI Agent that uses a PLINK / GWAS Wiki as a RAG knowledge source to build and validate a study-specific GWAS quality-control workflow, then generate and validate PLINK command examples.
 
 ## Project goal
@@ -126,18 +128,98 @@ The `wiki/` folder contains the normalized teaching chapters used by RAG. The `r
 
 Important design principle: QC thresholds shown by the system are examples rather than universal rules. Study design, sample properties, ancestry, genotyping platform, and analysis goals may require different settings.
 
-## Running the final app in Google Colab
+## Run the final app in Google Colab
 
-1. Upload/open `notebooks/05_final_gradio_app_v5_rate_limit_safe.ipynb`.
-2. Add a Colab Secret named `Groq`.
-3. Enable notebook access for the secret.
-4. Run all cells.
-5. Open the Gradio interface.
-6. Enter study information and select **Run Workflow**.
+The recommended way to run the final project is Google Colab.
 
-The public `gradio.live` URL is temporary. A permanent deployment can be added after final testing.
+### 1. Open the final notebook
+
+Click the badge at the top of this README, or open:
+
+[`notebooks/05_final_gradio_app_v5_rate_limit_safe.ipynb`](notebooks/05_final_gradio_app_v5_rate_limit_safe.ipynb)
+
+### 2. Add the Groq API key to Colab Secrets
+
+In Colab:
+
+1. Open the **Secrets** panel in the left sidebar.
+2. Create a new secret named:
+
+```text
+Groq
+```
+
+3. Paste your Groq API key as the value.
+4. Enable **Notebook access** for that secret.
+
+> Do not paste the API key directly into the notebook or GitHub repository.
+
+### 3. Run the notebook
+
+Use:
+
+```text
+Runtime → Run all
+```
+
+The notebook will:
+
+```text
+Load the Wiki
+→ Build embeddings and FAISS index
+→ Start the RAG pipeline
+→ Build the QC Planning Agent
+→ Enable Plan / Command validation loops
+→ Launch the Gradio Web App
+```
+
+### 4. Use the Gradio interface
+
+Enter the study settings and click:
+
+```text
+Run Workflow
+```
+
+The interface shows:
+
+- Retrieved Knowledge
+- QC Plan
+- Plan Check
+- PLINK Commands
+- Command Check
+- Final Report
+
+The workflow also displays progress while retrieval, planning, validation, and command generation are running.
+
+### 5. Gradio link note
+
+When the notebook is launched with `share=True`, Gradio may provide a public URL such as:
+
+```text
+https://xxxxx.gradio.live
+```
+
+This URL is **temporary** and is intended for demonstration/testing.  
+The permanent project source, Wiki, test evidence, and workflow documentation are stored in this GitHub repository.
+
+## Recommended demo procedure
+
+For a presentation or grading demo:
+
+1. Open the final notebook in Colab.
+2. Add the `Groq` secret.
+3. Run all cells.
+4. Open the generated Gradio interface.
+5. Demonstrate one normal case.
+6. Show the stored FAIL → revision → PASS evidence under `tests/`.
+
+The four normal test cases and the injected-error loop tests are already documented in the repository, so the live demo does not need to rerun every case.
 
 ## Current project status
+
+**Deployment strategy:** GitHub for permanent project storage + Google Colab / Gradio for executable demo.
+
 
 **MVP development: complete.**  
 **Normal-case evaluation: complete.**  
